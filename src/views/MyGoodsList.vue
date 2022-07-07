@@ -15,12 +15,17 @@
           <td>{{ item.goods_price }}</td>
           <td>{{ item.tags }}</td>
           <td>
-            <button class="btn btn-danger btn-sm" style="margin-right: 8px">
+            <button
+              class="btn btn-danger btn-sm"
+              style="margin-right: 8px"
+              v-isShow="item.isShow"
+            >
               删除
             </button>
             <button
               class="btn btn-danger btn-sm"
               style="background: skyblue; border: 1px solid skyblue"
+              v-isShow="item.isShow"
             >
               编辑
             </button>
@@ -37,6 +42,7 @@ export default {
   data() {
     return {
       list: [],
+      isShow: [0, 1, 0, 0, 0, 1, 1, 1, 0, 1],
     };
   },
   components: {
@@ -46,9 +52,21 @@ export default {
     this.$axios({
       url: "api/goods",
     }).then((res) => {
-      console.log(res.data.data);
+      res.data.data.forEach((item, index) => {
+        item.isShow = this.isShow[index];
+      });
       this.list = res.data.data;
+      console.log(this.list);
     });
+  },
+  directives: {
+    isShow: {
+      inserted(el, binding) {
+        if (binding.value) {
+          el.style.display = "none";
+        }
+      },
+    },
   },
 };
 </script>
