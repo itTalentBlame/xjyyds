@@ -27,6 +27,7 @@
               class="btn btn-danger btn-sm"
               style="margin-right: 8px"
               v-isShow="item.isShow"
+              @click="del(item.id)"
             >
               删除
             </button>
@@ -74,6 +75,12 @@ export default {
           el.style.display = "none";
         }
       },
+    },
+  },
+  methods: {
+    del(id) {
+      const index = this.list.findIndex((item) => item.id == id);
+      this.list.splice(index, 1);
     },
   },
 };
