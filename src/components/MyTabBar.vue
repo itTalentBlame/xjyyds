@@ -5,7 +5,7 @@
       :class="{ current: isCurrent == item.componentName }"
       v-for="item in list"
       :key="item.componentName"
-      @click="isCurrent = item.componentName"
+      @click="clickFn(item.componentName)"
     >
       <!-- 图标 -->
       <span class="iconfont" :class="item.iconText"></span>
@@ -25,6 +25,12 @@ export default {
   props: {
     list: {
       type: Array,
+    },
+  },
+  methods: {
+    clickFn(componentName) {
+      this.isCurrent = componentName;
+      this.$emit("tabFn", componentName);
     },
   },
 };

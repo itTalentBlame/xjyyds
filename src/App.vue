@@ -1,21 +1,24 @@
 <template>
   <div>
     <MyHeader title="tabbar"></MyHeader>
-    <div>
-      <MyTable></MyTable>
+    <div style="margin-top: 45px">
+      <component :is="comName"></component>
     </div>
-    <MyTabBar :list="tabList"></MyTabBar>
+    <MyTabBar :list="tabList" @tabFn="tabFn"></MyTabBar>
   </div>
 </template>
 
 <script>
 import MyHeader from "./components/MyHeader.vue";
 import MyTabBar from "./components/MyTabBar.vue";
-import MyTable from "./components/MyTable.vue";
+import MyGoodsList from "./views/MyGoodsList.vue";
+import MyGoodsSearch from "./views/MyGoodsSearch.vue";
+import MyUserInfo from "./views/MyUserInfo.vue";
 export default {
   name: "App",
   data() {
     return {
+      comName: "MyGoodsList",
       tabList: [
         {
           iconText: "icon-shangpinliebiao",
@@ -36,9 +39,17 @@ export default {
     };
   },
   components: {
-    MyTable,
     MyTabBar,
     MyHeader,
+    MyGoodsList,
+    MyGoodsSearch,
+    MyUserInfo,
+  },
+  methods: {
+    tabFn(id) {
+      console.log(id);
+      this.comName = id;
+    },
   },
 };
 </script>
