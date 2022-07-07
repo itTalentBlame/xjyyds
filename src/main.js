@@ -3,6 +3,13 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
+import 'bootstrap/dist/css/bootstrap.css'
+import './assets/fonts/iconfont.css'
+
+import axios from 'axios'
+axios.defaults.baseURL = 'https://www.escook.cn'
+Vue.prototype.$axios = axios
+
 Vue.directive('gfocus', {
   inserted(el) {
     el.focus()

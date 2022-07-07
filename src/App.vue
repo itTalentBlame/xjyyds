@@ -1,34 +1,55 @@
 <template>
   <div>
-    <input type="text" v-gfocus v-model="str" v-number="str" />{{ str }}
-    <p v-color="colorStr" @click="colorStr = 'green'">Hello World</p>
+    <MyHeader title="tabber"></MyHeader>
+    <div style="margin: 45px 0">
+      <component :is="comName"></component>
+    </div>
+    <MyTabBar :tabList="tabList" @changeName="changeNameFn"></MyTabBar>
   </div>
 </template>
 
 <script>
+import MyHeader from './components/MyHeader.vue'
+import MyTabBar from './components/MyTabBar.vue'
+import MyTable from './components/MyTable.vue'
+
+import MyGoodsList from './views/MyGoodsList.vue'
+import MyGoodsSearch from './views/MyGoodsSearch.vue'
+import MyUserInfo from './views/MyUserInfo.vue'
 export default {
   data() {
     return {
-      str: '',
-      colorStr: 'red',
+      comName: 'MyGoodsList',
+      tabList: [
+        {
+          iconText: 'icon-shangpinliebiao',
+          text: '商品列表',
+          componentName: 'MyGoodsList',
+        },
+        {
+          iconText: 'icon-sousuo',
+          text: '商品搜索',
+          componentName: 'MyGoodsSearch',
+        },
+        {
+          iconText: 'icon-user',
+          text: '我的信息',
+          componentName: 'MyUserInfo',
+        },
+      ],
     }
   },
-  directives: {
-    number: {
-      update(el, binding, Vnode) {
-        el.focus()
-        el.value = el.value.replace(/\D+/g, '')
-        // this.str = el.val
-        Vnode.context[binding.expression] = el.value
-      },
-    },
-    color: {
-      inserted(el, binding) {
-        el.style.color = binding.value
-      },
-      update(el, binding) {
-        el.style.color = binding.value
-      },
+  components: {
+    MyHeader,
+    MyTabBar,
+    MyTable,
+    MyGoodsList,
+    MyGoodsSearch,
+    MyUserInfo,
+  },
+  methods: {
+    changeNameFn(val) {
+      this.comName = val
     },
   },
 }
