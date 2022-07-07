@@ -13,7 +13,15 @@
           <td>{{ item.id }}</td>
           <td>{{ item.goods_name }}</td>
           <td>{{ item.goods_price }}</td>
-          <td>{{ item.tags }}</td>
+          <td>
+            <span
+              class="badge badge-info"
+              v-for="(obj, index) in item.tags"
+              :key="index"
+              style="margin-right: 8px"
+              >{{ obj }}</span
+            >
+          </td>
           <td>
             <button
               class="btn btn-danger btn-sm"
