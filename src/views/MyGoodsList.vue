@@ -14,6 +14,24 @@
           <td>{{ item.goods_name }}</td>
           <td>{{ item.goods_price }}</td>
           <td>
+            <input
+              type="text"
+              class="tag-input form-control"
+              style="width: 100px"
+              v-if="item.inputVisible"
+              v-focus
+              @blur="item.inputVisible = !item.inputVisible"
+              v-model="item.inputValue"
+              @keyup.enter="enterFn(item)"
+              @keyup.esc="item.inputValue = ''"
+            />
+            <button
+              class="btn btn-primary btn-sm add-tag"
+              v-else
+              @click="item.inputVisible = !item.inputVisible"
+            >
+              +Tag
+            </button>
             <span
               class="badge badge-info"
               v-for="(obj, index) in item.tags"
@@ -76,11 +94,21 @@ export default {
         }
       },
     },
+    focus: {
+      inserted(el) {
+        el.focus();
+      },
+    },
   },
   methods: {
     del(id) {
       const index = this.list.findIndex((item) => item.id == id);
       this.list.splice(index, 1);
+    },
+    enterFn(item) {
+      if (!item.inputValue) return;
+      item.tags.push(item.inputValue);
+      item.inputValue = "";
     },
   },
 };
